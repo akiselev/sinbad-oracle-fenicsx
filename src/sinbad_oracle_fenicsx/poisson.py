@@ -53,7 +53,13 @@ def solve_manufactured_poisson(refinement: tuple[int, int]) -> dict[str, float]:
     f = 2.0 * ufl.pi**2 * ufl.sin(ufl.pi * x[0]) * ufl.sin(ufl.pi * x[1])
     k = fem.Constant(domain, 1.0)
 
-    u_exact_expr = fem.Expression(u_exact_ufl, v_space.element.interpolation_points())
+    # dolfinx <= 0.8 exposes interpolation_points() as a method; newer releases
+    # (including the current dolfinx/dolfinx:stable image) make it a property
+    # returning the ndarray directly. Accept both.
+    interpolation_points = v_space.element.interpolation_points
+    if callable(interpolation_points):
+        interpolation_points = interpolation_points()
+    u_exact_expr = fem.Expression(u_exact_ufl, interpolation_points)
     u_bc = fem.Function(v_space)
     u_bc.interpolate(u_exact_expr)
 
@@ -69,12 +75,18 @@ def solve_manufactured_poisson(refinement: tuple[int, int]) -> dict[str, float]:
     a = k * ufl.inner(ufl.grad(u), ufl.grad(v)) * ufl.dx
     ell = f * v * ufl.dx
 
-    problem = LinearProblem(
-        a,
-        ell,
-        bcs=[bc],
-        petsc_options={"ksp_type": "preonly", "pc_type": "lu"},
-    )
+    problem_kwargs = {
+        "bcs": [bc],
+        "petsc_options": {"ksp_type": "preonly", "pc_type": "lu"},
+    }
+    try:
+        # Newer dolfinx (the current dolfinx/dolfinx:stable image) requires the
+        # keyword-only petsc_options_prefix; older releases do not accept it.
+        problem = LinearProblem(
+            a, ell, petsc_options_prefix="sinbad_oracle_poisson_", **problem_kwargs
+        )
+    except TypeError:
+        problem = LinearProblem(a, ell, **problem_kwargs)
     uh = problem.solve()
 
     def integral(expr) -> float:
