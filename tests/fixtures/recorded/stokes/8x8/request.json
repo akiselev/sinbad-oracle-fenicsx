@@ -1,0 +1,23 @@
+{
+  "schema": "sinbad-oracle-request/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "capability": "stokes",
+  "case_id": "25-stokes/recorded-8x8",
+  "model_digest": "blake3:recorded-fixture",
+  "refinement": [
+    8,
+    8
+  ],
+  "observables": [
+    "dissipation",
+    "divergence_l2_norm",
+    "mass_defect",
+    "pressure_l2_norm",
+    "solution_rms",
+    "velocity_l2_norm"
+  ]
+}

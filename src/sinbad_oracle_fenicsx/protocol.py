@@ -38,9 +38,6 @@ ORACLE_PROTOCOL_SCHEMA = "sinbad-oracle-protocol/1"
 ORACLE_REQUEST_SCHEMA = "sinbad-oracle-request/1"
 ORACLE_RESULT_SCHEMA = "sinbad-oracle-result/1"
 
-# The protocol's `OracleCapability` enum currently has exactly one variant.
-POISSON_CAPABILITY = "poisson"
-
 # The protocol's `OracleRefusalClass` enum, `snake_case`-rendered.
 REFUSAL_CLASSES = frozenset(
     {"version_lie", "crash", "timeout", "malformed_output", "unsupported_case"}
@@ -115,8 +112,7 @@ class OracleRequest:
             schema = str(data["schema"])
             if schema != ORACLE_REQUEST_SCHEMA:
                 raise ProtocolError(
-                    f"unsupported request schema {schema!r}, "
-                    f"expected {ORACLE_REQUEST_SCHEMA!r}"
+                    f"unsupported request schema {schema!r}, expected {ORACLE_REQUEST_SCHEMA!r}"
                 )
             tool = OracleToolIdentity.from_dict(data["tool"])
             capability = str(data["capability"])
@@ -138,6 +134,17 @@ class OracleRequest:
             refinement=refinement,
             observables=observables,
         )
+
+    def to_dict(self) -> dict:
+        return {
+            "schema": self.schema,
+            "tool": self.tool.to_dict(),
+            "capability": self.capability,
+            "case_id": self.case_id,
+            "model_digest": self.model_digest,
+            "refinement": list(self.refinement),
+            "observables": list(self.observables),
+        }
 
     @staticmethod
     def read(path: Path) -> "OracleRequest":

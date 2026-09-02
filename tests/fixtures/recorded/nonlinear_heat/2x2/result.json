@@ -1,0 +1,20 @@
+{
+  "schema": "sinbad-oracle-result/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "case_id": "03-nonlinear-heat/recorded-2x2",
+  "status": {
+    "status": "satisfied"
+  },
+  "observables": {
+    "forcing_defect": 4405242524455667712,
+    "h1_seminorm_error": 4609448125404846150,
+    "l2_error": 4597914111964536912,
+    "nodal_l2_error": 4587574346485284864,
+    "steady_l2_error": 4597914455635301387,
+    "total_energy": 4643988991322920525
+  }
+}

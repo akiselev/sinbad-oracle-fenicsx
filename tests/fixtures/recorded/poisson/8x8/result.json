@@ -1,0 +1,17 @@
+{
+  "schema": "sinbad-oracle-result/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "case_id": "01-poisson/recorded-8x8",
+  "status": {
+    "status": "satisfied"
+  },
+  "observables": {
+    "energy": 4612528588374008511,
+    "h1_seminorm_error": 4601450206263694620,
+    "l2_error": 4581748328651425560
+  }
+}

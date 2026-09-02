@@ -1,0 +1,134 @@
+{
+  "capability": "stokes",
+  "extraction": {
+    "modules": {
+      "adapter.py": "sha256:9743eb6b7b814c0eeb4a64bab580381ce4d0b7075fab00305ecbb1bc00a2709e",
+      "common.py": "sha256:f1c809eb298edd4daa85b5ebafe068b52e316a82599dd2aecaa8379afb59539a",
+      "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
+      "protocol.py": "sha256:7458527387ef0ffd7b81c8f18c2dc7deda0558d168839423ebe3cd74725a26bb",
+      "stokes.py": "sha256:7075d112629ee75531888335e7a445a7462e0b9e6379a9c18fa982eebb387dc8"
+    },
+    "package_digest": "sha256:384a6ea727b348b5eed14d3e6aa3edf6dccc936470bd6f49c5fc40a009ca4023",
+    "package_scripts": {
+      "__init__.py": "sha256:34c39e940387d47264486722b037ad3063d98d5a55995cd824f16e0631a5f7ee",
+      "__main__.py": "sha256:96a7f02cc68bbd5cea5e9d1f23f4f888a77d4e261f9d416e669164925b7fcdfa",
+      "adapter.py": "sha256:9743eb6b7b814c0eeb4a64bab580381ce4d0b7075fab00305ecbb1bc00a2709e",
+      "capability.py": "sha256:89152fc3bf17956eb052bbc8c9f13fbf86e1da82a2695c893adbda186c47d46f",
+      "common.py": "sha256:f1c809eb298edd4daa85b5ebafe068b52e316a82599dd2aecaa8379afb59539a",
+      "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
+      "linear_elasticity.py": "sha256:ee57c7ce25c3e5491cb2b94d91883dff0091eca227433bd8a64ef7de26b33fda",
+      "mixed_darcy.py": "sha256:15cfcf9d959ba6da2c13af00772b2f2a2dd816ffd20dab38907c8b8ec94efe11",
+      "nonlinear_heat.py": "sha256:6c78609a0736c78c30adc64a372f34834102f5de898cd60a9e9ffb939e176bc1",
+      "normalization_doc.py": "sha256:e2dbfcd3e2d9c508d08e3da76b6f8ddd5a4d8a21c4c8fd5ac5034d307f98d51b",
+      "outcome.py": "sha256:42e29c02100209bb9a43f4c5e260317f9b0e22186645081bb0168dcce5205a89",
+      "poisson.py": "sha256:e19bd0001aebfc59550d5b08bc935e24aefc8d8d690aaf1f180e2ece98ea8e33",
+      "protocol.py": "sha256:7458527387ef0ffd7b81c8f18c2dc7deda0558d168839423ebe3cd74725a26bb",
+      "registry.py": "sha256:d4af0f82d30d60a4fbf2af047d728a75f4744de97acf9491e87105c4bbf0410d",
+      "stokes.py": "sha256:7075d112629ee75531888335e7a445a7462e0b9e6379a9c18fa982eebb387dc8"
+    }
+  },
+  "mesh": {
+    "cell_count": 8,
+    "cell_type": "triangle",
+    "dimension": 2,
+    "file": "mesh.npz",
+    "sha256": "sha256:80feb31e7f5cc53a232407187b5b3bb97e3ae0b99c03d92df3bd44ae7fad0f78",
+    "subdivisions": [
+      2,
+      2
+    ],
+    "vertex_count": 9
+  },
+  "model": "StokesFlow",
+  "normalization": {
+    "dissipation": "integral over the domain of inner(2 mu sym_grad(u), sym_grad(u)), mu = 1.7",
+    "divergence_l2_norm": "L2 norm over the domain of div(u)",
+    "mass_defect": "integral over the domain of div(u)",
+    "pressure_l2_norm": "L2 norm over the domain of p under the zero-mean gauge (p shifted so its domain integral vanishes)",
+    "solution_rms": "root-mean-square over the concatenated P2 velocity (both components, every P2 node) and P1 pressure (every P1 node) degrees of freedom, the pressure dofs shifted to zero arithmetic mean (Sinbad's `pressure_mean` gauge)",
+    "velocity_l2_norm": "L2 norm over the domain of u"
+  },
+  "normalization_version": 1,
+  "notes": {
+    "linear_solver": {
+      "ksp_type": "preonly",
+      "mat_mumps_icntl_24": 1,
+      "mat_mumps_icntl_25": 0,
+      "pc_factor_mat_solver_type": "mumps",
+      "pc_type": "lu"
+    },
+    "pressure_gauge": "zero mean",
+    "system_dimension": 59,
+    "viscosity": 1.7
+  },
+  "observables": {
+    "dissipation": 0.0001914828431372555,
+    "divergence_l2_norm": 0.0036764705882352997,
+    "mass_defect": -5.421010862427522e-20,
+    "pressure_l2_norm": 0.0430247425584654,
+    "solution_rms": 0.03259535488026919,
+    "velocity_l2_norm": 0.0013141918253386782
+  },
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "request": {
+    "capability": "stokes",
+    "case_id": "25-stokes/recorded-2x2",
+    "model_digest": "blake3:recorded-fixture",
+    "observables": [
+      "dissipation",
+      "divergence_l2_norm",
+      "mass_defect",
+      "pressure_l2_norm",
+      "solution_rms",
+      "velocity_l2_norm"
+    ],
+    "refinement": [
+      2,
+      2
+    ],
+    "schema": "sinbad-oracle-request/1",
+    "tool": {
+      "name": "sinbad-oracle-fenicsx",
+      "normalization_version": 1,
+      "version": "0.11.0.post0"
+    }
+  },
+  "schema": "sinbad-oracle-fenicsx-evidence/1",
+  "sinbad_case": "25-stokes",
+  "solution": {
+    "fields": [
+      {
+        "components": 2,
+        "dof_coordinates": "velocity__dof_coordinates",
+        "dof_count": 25,
+        "name": "velocity",
+        "space": "H1(order=2) vector(2)"
+      },
+      {
+        "components": 1,
+        "dof_coordinates": "pressure__dof_coordinates",
+        "dof_count": 9,
+        "name": "pressure",
+        "space": "L2(order=1) continuous"
+      }
+    ],
+    "file": "solution.npz",
+    "sha256": "sha256:be1c468b6bea3cd7dc28b1a190878399a6787aba38a83ad91a9acb67d307088f"
+  },
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "normalization_version": 1,
+    "version": "0.11.0.post0"
+  },
+  "toolchain": {
+    "basix": "0.11.0",
+    "dolfinx": "0.11.0.post0",
+    "dolfinx_git_commit": "fefdb2201b80a8f59527de2d461b9056906661d8",
+    "mpi4py": "4.1.2",
+    "numpy": "2.4.6",
+    "petsc": "3.25.1",
+    "petsc4py": "3.25.1",
+    "python": "3.12.3",
+    "ufl": "2026.1.0"
+  }
+}

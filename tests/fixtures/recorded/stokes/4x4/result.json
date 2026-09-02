@@ -1,0 +1,20 @@
+{
+  "schema": "sinbad-oracle-result/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "case_id": "25-stokes/recorded-4x4",
+  "status": {
+    "status": "satisfied"
+  },
+  "observables": {
+    "dissipation": 4552273096673804067,
+    "divergence_l2_norm": 4564304705185915616,
+    "mass_defect": 13542324079503081472,
+    "pressure_l2_norm": 4586458889324217662,
+    "solution_rms": 4582694085597204657,
+    "velocity_l2_norm": 4564493792168455773
+  }
+}

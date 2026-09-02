@@ -1,0 +1,113 @@
+{
+  "capability": "poisson",
+  "extraction": {
+    "modules": {
+      "adapter.py": "sha256:9743eb6b7b814c0eeb4a64bab580381ce4d0b7075fab00305ecbb1bc00a2709e",
+      "common.py": "sha256:f1c809eb298edd4daa85b5ebafe068b52e316a82599dd2aecaa8379afb59539a",
+      "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
+      "poisson.py": "sha256:e19bd0001aebfc59550d5b08bc935e24aefc8d8d690aaf1f180e2ece98ea8e33",
+      "protocol.py": "sha256:7458527387ef0ffd7b81c8f18c2dc7deda0558d168839423ebe3cd74725a26bb"
+    },
+    "package_digest": "sha256:384a6ea727b348b5eed14d3e6aa3edf6dccc936470bd6f49c5fc40a009ca4023",
+    "package_scripts": {
+      "__init__.py": "sha256:34c39e940387d47264486722b037ad3063d98d5a55995cd824f16e0631a5f7ee",
+      "__main__.py": "sha256:96a7f02cc68bbd5cea5e9d1f23f4f888a77d4e261f9d416e669164925b7fcdfa",
+      "adapter.py": "sha256:9743eb6b7b814c0eeb4a64bab580381ce4d0b7075fab00305ecbb1bc00a2709e",
+      "capability.py": "sha256:89152fc3bf17956eb052bbc8c9f13fbf86e1da82a2695c893adbda186c47d46f",
+      "common.py": "sha256:f1c809eb298edd4daa85b5ebafe068b52e316a82599dd2aecaa8379afb59539a",
+      "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
+      "linear_elasticity.py": "sha256:ee57c7ce25c3e5491cb2b94d91883dff0091eca227433bd8a64ef7de26b33fda",
+      "mixed_darcy.py": "sha256:15cfcf9d959ba6da2c13af00772b2f2a2dd816ffd20dab38907c8b8ec94efe11",
+      "nonlinear_heat.py": "sha256:6c78609a0736c78c30adc64a372f34834102f5de898cd60a9e9ffb939e176bc1",
+      "normalization_doc.py": "sha256:e2dbfcd3e2d9c508d08e3da76b6f8ddd5a4d8a21c4c8fd5ac5034d307f98d51b",
+      "outcome.py": "sha256:42e29c02100209bb9a43f4c5e260317f9b0e22186645081bb0168dcce5205a89",
+      "poisson.py": "sha256:e19bd0001aebfc59550d5b08bc935e24aefc8d8d690aaf1f180e2ece98ea8e33",
+      "protocol.py": "sha256:7458527387ef0ffd7b81c8f18c2dc7deda0558d168839423ebe3cd74725a26bb",
+      "registry.py": "sha256:d4af0f82d30d60a4fbf2af047d728a75f4744de97acf9491e87105c4bbf0410d",
+      "stokes.py": "sha256:7075d112629ee75531888335e7a445a7462e0b9e6379a9c18fa982eebb387dc8"
+    }
+  },
+  "mesh": {
+    "cell_count": 512,
+    "cell_type": "triangle",
+    "dimension": 2,
+    "file": "mesh.npz",
+    "sha256": "sha256:39d15fe63446dd04aa307e5b2e57f6280e2c1dbc9efc3139dd70d1949cbbdd25",
+    "subdivisions": [
+      16,
+      16
+    ],
+    "vertex_count": 289
+  },
+  "model": "Poisson",
+  "normalization": {
+    "energy": "integral over the domain of 0.5 * k * dot(grad u, grad u), k = 1",
+    "h1_seminorm_error": "L2 norm over the domain of grad(discrete field - exact manufactured field)",
+    "l2_error": "L2 norm over the domain of (discrete field - exact manufactured field)"
+  },
+  "normalization_version": 1,
+  "notes": {
+    "linear_solver": {
+      "ksp_type": "preonly",
+      "pc_factor_mat_solver_type": "mumps",
+      "pc_type": "lu"
+    }
+  },
+  "observables": {
+    "energy": 2.4437400714546524,
+    "h1_seminorm_error": 0.2175363363595291,
+    "l2_error": 0.005377435009947058
+  },
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "request": {
+    "capability": "poisson",
+    "case_id": "01-poisson/recorded-16x16",
+    "model_digest": "blake3:recorded-fixture",
+    "observables": [
+      "energy",
+      "h1_seminorm_error",
+      "l2_error"
+    ],
+    "refinement": [
+      16,
+      16
+    ],
+    "schema": "sinbad-oracle-request/1",
+    "tool": {
+      "name": "sinbad-oracle-fenicsx",
+      "normalization_version": 1,
+      "version": "0.11.0.post0"
+    }
+  },
+  "schema": "sinbad-oracle-fenicsx-evidence/1",
+  "sinbad_case": "01-poisson",
+  "solution": {
+    "fields": [
+      {
+        "components": 1,
+        "dof_coordinates": "u__dof_coordinates",
+        "dof_count": 289,
+        "name": "u",
+        "space": "H1(order=1)"
+      }
+    ],
+    "file": "solution.npz",
+    "sha256": "sha256:8ce64e304eab06dd7dd01d4c024ff25284dad787f21c6de21b88799bb17f2a1f"
+  },
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "normalization_version": 1,
+    "version": "0.11.0.post0"
+  },
+  "toolchain": {
+    "basix": "0.11.0",
+    "dolfinx": "0.11.0.post0",
+    "dolfinx_git_commit": "fefdb2201b80a8f59527de2d461b9056906661d8",
+    "mpi4py": "4.1.2",
+    "numpy": "2.4.6",
+    "petsc": "3.25.1",
+    "petsc4py": "3.25.1",
+    "python": "3.12.3",
+    "ufl": "2026.1.0"
+  }
+}

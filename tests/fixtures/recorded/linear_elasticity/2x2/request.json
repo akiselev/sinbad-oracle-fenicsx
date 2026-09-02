@@ -1,0 +1,23 @@
+{
+  "schema": "sinbad-oracle-request/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "capability": "linear_elasticity",
+  "case_id": "17-linear-elasticity/recorded-2x2",
+  "model_digest": "blake3:recorded-fixture",
+  "refinement": [
+    2,
+    2
+  ],
+  "observables": [
+    "displacement_magnitude_sq",
+    "forcing_defect",
+    "h1_seminorm_error",
+    "l2_error",
+    "nodal_l2_error",
+    "strain_energy"
+  ]
+}

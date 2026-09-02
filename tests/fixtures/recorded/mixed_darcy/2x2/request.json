@@ -1,0 +1,22 @@
+{
+  "schema": "sinbad-oracle-request/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "capability": "mixed_darcy",
+  "case_id": "13-mixed-darcy/recorded-2x2",
+  "model_digest": "blake3:recorded-fixture",
+  "refinement": [
+    2,
+    2
+  ],
+  "observables": [
+    "flux_l2_norm",
+    "mass_residual_l2",
+    "pressure_l2_norm",
+    "source_compatibility_defect",
+    "total_flow"
+  ]
+}

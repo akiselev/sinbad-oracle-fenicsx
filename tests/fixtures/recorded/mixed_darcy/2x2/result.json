@@ -1,0 +1,15 @@
+{
+  "schema": "sinbad-oracle-result/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "case_id": "13-mixed-darcy/recorded-2x2",
+  "status": {
+    "status": "refused",
+    "class": "unsupported_case",
+    "message": "the declared mixed Darcy problem has no solution: impermeable walls (flux . n = 0 on the whole boundary) force integral(source_term) = integral_boundary(flux . n) = 0, but integral(source_term) = 1 over the unit cube (compatibility defect 1); an independent oracle cannot report a solution to an inconsistent problem"
+  },
+  "observables": {}
+}

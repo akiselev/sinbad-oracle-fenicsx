@@ -1,0 +1,150 @@
+{
+  "capability": "nonlinear_heat",
+  "extraction": {
+    "modules": {
+      "adapter.py": "sha256:9743eb6b7b814c0eeb4a64bab580381ce4d0b7075fab00305ecbb1bc00a2709e",
+      "common.py": "sha256:f1c809eb298edd4daa85b5ebafe068b52e316a82599dd2aecaa8379afb59539a",
+      "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
+      "nonlinear_heat.py": "sha256:6c78609a0736c78c30adc64a372f34834102f5de898cd60a9e9ffb939e176bc1",
+      "protocol.py": "sha256:7458527387ef0ffd7b81c8f18c2dc7deda0558d168839423ebe3cd74725a26bb"
+    },
+    "package_digest": "sha256:384a6ea727b348b5eed14d3e6aa3edf6dccc936470bd6f49c5fc40a009ca4023",
+    "package_scripts": {
+      "__init__.py": "sha256:34c39e940387d47264486722b037ad3063d98d5a55995cd824f16e0631a5f7ee",
+      "__main__.py": "sha256:96a7f02cc68bbd5cea5e9d1f23f4f888a77d4e261f9d416e669164925b7fcdfa",
+      "adapter.py": "sha256:9743eb6b7b814c0eeb4a64bab580381ce4d0b7075fab00305ecbb1bc00a2709e",
+      "capability.py": "sha256:89152fc3bf17956eb052bbc8c9f13fbf86e1da82a2695c893adbda186c47d46f",
+      "common.py": "sha256:f1c809eb298edd4daa85b5ebafe068b52e316a82599dd2aecaa8379afb59539a",
+      "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
+      "linear_elasticity.py": "sha256:ee57c7ce25c3e5491cb2b94d91883dff0091eca227433bd8a64ef7de26b33fda",
+      "mixed_darcy.py": "sha256:15cfcf9d959ba6da2c13af00772b2f2a2dd816ffd20dab38907c8b8ec94efe11",
+      "nonlinear_heat.py": "sha256:6c78609a0736c78c30adc64a372f34834102f5de898cd60a9e9ffb939e176bc1",
+      "normalization_doc.py": "sha256:e2dbfcd3e2d9c508d08e3da76b6f8ddd5a4d8a21c4c8fd5ac5034d307f98d51b",
+      "outcome.py": "sha256:42e29c02100209bb9a43f4c5e260317f9b0e22186645081bb0168dcce5205a89",
+      "poisson.py": "sha256:e19bd0001aebfc59550d5b08bc935e24aefc8d8d690aaf1f180e2ece98ea8e33",
+      "protocol.py": "sha256:7458527387ef0ffd7b81c8f18c2dc7deda0558d168839423ebe3cd74725a26bb",
+      "registry.py": "sha256:d4af0f82d30d60a4fbf2af047d728a75f4744de97acf9491e87105c4bbf0410d",
+      "stokes.py": "sha256:7075d112629ee75531888335e7a445a7462e0b9e6379a9c18fa982eebb387dc8"
+    }
+  },
+  "mesh": {
+    "cell_count": 32,
+    "cell_type": "triangle",
+    "dimension": 2,
+    "file": "mesh.npz",
+    "sha256": "sha256:43892f4d4f2a7f6d607ff880e5519557be1e0c533bd919d923bc0379764b2c52",
+    "subdivisions": [
+      4,
+      4
+    ],
+    "vertex_count": 25
+  },
+  "model": "NonlinearHeat",
+  "normalization": {
+    "forcing_defect": "L2 norm over the domain of (case-authored source Q - the source UFL derives symbolically as -div(k(T_exact) grad T_exact)); an independent check of the case's hand-derived forcing",
+    "h1_seminorm_error": "L2 norm over the domain of grad(discrete field - exact manufactured field) at the final time t = 0.4",
+    "l2_error": "L2 norm over the domain of (discrete field - exact manufactured field) at the final time t = 0.4",
+    "nodal_l2_error": "root-mean-square over every mesh vertex and field component of (vertex value - exact manufactured value), Sinbad's `nodal_l2_error` normalization at the final time t = 0.4",
+    "steady_l2_error": "L2 norm of (Newton steady-state solution - exact field), the time-independent companion sample for mesh-convergence estimates",
+    "total_energy": "integral over the domain of rho * cp * T at the final time t = 0.4 of the BDF2 march (step 0.05, BDF1 start-up step), rho = cp = 1"
+  },
+  "normalization_version": 1,
+  "notes": {
+    "final_time": 0.39999999999999997,
+    "integrator": "bdf2",
+    "newton_iterations_per_step": [
+      3,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "newton_options": {
+      "ksp_type": "preonly",
+      "pc_factor_mat_solver_type": "mumps",
+      "pc_type": "lu",
+      "snes_atol": 1e-12,
+      "snes_linesearch_type": "none",
+      "snes_max_it": 50,
+      "snes_rtol": 1e-12,
+      "snes_type": "newtonls"
+    },
+    "startup": "bdf1",
+    "steady_newton_iterations": 3,
+    "step": 0.05,
+    "steps": 8
+  },
+  "observables": {
+    "forcing_defect": 3.1165127403173936e-14,
+    "h1_seminorm_error": 0.8387929105132261,
+    "l2_error": 0.07587229468612591,
+    "nodal_l2_error": 0.016912080910760966,
+    "steady_l2_error": 0.07586310512616315,
+    "total_energy": 300.34910799781636
+  },
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "request": {
+    "capability": "nonlinear_heat",
+    "case_id": "03-nonlinear-heat/recorded-4x4",
+    "model_digest": "blake3:recorded-fixture",
+    "observables": [
+      "forcing_defect",
+      "h1_seminorm_error",
+      "l2_error",
+      "nodal_l2_error",
+      "steady_l2_error",
+      "total_energy"
+    ],
+    "refinement": [
+      4,
+      4
+    ],
+    "schema": "sinbad-oracle-request/1",
+    "tool": {
+      "name": "sinbad-oracle-fenicsx",
+      "normalization_version": 1,
+      "version": "0.11.0.post0"
+    }
+  },
+  "schema": "sinbad-oracle-fenicsx-evidence/1",
+  "sinbad_case": "03-nonlinear-heat",
+  "solution": {
+    "fields": [
+      {
+        "components": 1,
+        "dof_coordinates": "T__dof_coordinates",
+        "dof_count": 25,
+        "name": "T",
+        "space": "H1(order=1)"
+      },
+      {
+        "components": 1,
+        "dof_coordinates": "T_steady__dof_coordinates",
+        "dof_count": 25,
+        "name": "T_steady",
+        "space": "H1(order=1)"
+      }
+    ],
+    "file": "solution.npz",
+    "sha256": "sha256:9212ccb0b55ffa47cffc6510d07e912903abc8fd9f4f11aaba152425e81ae626"
+  },
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "normalization_version": 1,
+    "version": "0.11.0.post0"
+  },
+  "toolchain": {
+    "basix": "0.11.0",
+    "dolfinx": "0.11.0.post0",
+    "dolfinx_git_commit": "fefdb2201b80a8f59527de2d461b9056906661d8",
+    "mpi4py": "4.1.2",
+    "numpy": "2.4.6",
+    "petsc": "3.25.1",
+    "petsc4py": "3.25.1",
+    "python": "3.12.3",
+    "ufl": "2026.1.0"
+  }
+}

@@ -1,4 +1,4 @@
-"""dolfinx-backed independent solve of Sinbad's 01-poisson manufactured case.
+"""dolfinx-backed independent solve of Sinbad's 01-poisson manufactured case (SV0-D1).
 
 Mirrors `sinbad/cases/01-poisson.toml` and `sinbad/physics/corpus/01-poisson.res`
 exactly, using dolfinx's own mesh, assembly, and linear solve -- never
@@ -25,27 +25,19 @@ will raise ImportError on import otherwise.
 
 from __future__ import annotations
 
-import numpy as np
 import ufl
 from dolfinx import fem
-from dolfinx import mesh as dmesh
-from dolfinx.fem.petsc import LinearProblem
-from mpi4py import MPI
 
-SUPPORTED_OBSERVABLES = frozenset({"energy", "l2_error", "h1_seminorm_error"})
+from . import common
+from .outcome import SolveOutcome
+
+CAPABILITY = "poisson"
 
 
-def solve_manufactured_poisson(refinement: tuple[int, int]) -> dict[str, float]:
-    """Solves the 01-poisson manufactured case at one [nx, ny] refinement.
-
-    Returns every observable in `SUPPORTED_OBSERVABLES`; the adapter selects
-    the requested subset before reporting.
-    """
-    nx, ny = refinement
-    if nx < 1 or ny < 1:
-        raise ValueError(f"refinement subdivisions must be positive, got {refinement}")
-
-    domain = dmesh.create_unit_square(MPI.COMM_WORLD, nx, ny, dmesh.CellType.triangle)
+def solve(refinement: tuple[int, int]) -> SolveOutcome:
+    """Solves the 01-poisson manufactured case at one [nx, ny] refinement."""
+    subdivisions = common.subdivisions_for(2, refinement)
+    domain = common.unit_box(subdivisions)
     v_space = fem.functionspace(domain, ("Lagrange", 1))
 
     x = ufl.SpatialCoordinate(domain)
@@ -53,56 +45,30 @@ def solve_manufactured_poisson(refinement: tuple[int, int]) -> dict[str, float]:
     f = 2.0 * ufl.pi**2 * ufl.sin(ufl.pi * x[0]) * ufl.sin(ufl.pi * x[1])
     k = fem.Constant(domain, 1.0)
 
-    # dolfinx <= 0.8 exposes interpolation_points() as a method; newer releases
-    # (including the current dolfinx/dolfinx:stable image) make it a property
-    # returning the ndarray directly. Accept both.
-    interpolation_points = v_space.element.interpolation_points
-    if callable(interpolation_points):
-        interpolation_points = interpolation_points()
-    u_exact_expr = fem.Expression(u_exact_ufl, interpolation_points)
-    u_bc = fem.Function(v_space)
-    u_bc.interpolate(u_exact_expr)
-
-    tdim = domain.topology.dim
-    fdim = tdim - 1
-    domain.topology.create_connectivity(fdim, tdim)
-    boundary_facets = dmesh.exterior_facet_indices(domain.topology)
-    boundary_dofs = fem.locate_dofs_topological(v_space, fdim, boundary_facets)
-    bc = fem.dirichletbc(u_bc, boundary_dofs)
+    u_bc = common.interpolate(v_space, u_exact_ufl)
+    bc = common.dirichlet_everywhere(v_space, u_bc)
 
     u = ufl.TrialFunction(v_space)
     v = ufl.TestFunction(v_space)
     a = k * ufl.inner(ufl.grad(u), ufl.grad(v)) * ufl.dx
     ell = f * v * ufl.dx
+    uh = common.solved(common.linear_problem(a, ell, [bc], "sinbad_oracle_poisson_"))
 
-    problem_kwargs = {
-        "bcs": [bc],
-        "petsc_options": {"ksp_type": "preonly", "pc_type": "lu"},
-    }
-    try:
-        # Newer dolfinx (the current dolfinx/dolfinx:stable image) requires the
-        # keyword-only petsc_options_prefix; older releases do not accept it.
-        problem = LinearProblem(
-            a, ell, petsc_options_prefix="sinbad_oracle_poisson_", **problem_kwargs
-        )
-    except TypeError:
-        problem = LinearProblem(a, ell, **problem_kwargs)
-    uh = problem.solve()
-
-    def integral(expr) -> float:
-        local = fem.assemble_scalar(fem.form(expr))
-        return float(domain.comm.allreduce(local, op=MPI.SUM))
-
-    energy = integral(0.5 * k * ufl.dot(ufl.grad(uh), ufl.grad(uh)) * ufl.dx)
-
+    energy = common.integral(domain, 0.5 * k * ufl.dot(ufl.grad(uh), ufl.grad(uh)) * ufl.dx)
     error = uh - u_exact_ufl
-    l2_error = float(np.sqrt(integral(ufl.inner(error, error) * ufl.dx)))
-    h1_seminorm_error = float(
-        np.sqrt(integral(ufl.inner(ufl.grad(error), ufl.grad(error)) * ufl.dx))
+    observables = {
+        "energy": energy,
+        "l2_error": common.l2_norm(domain, error),
+        "h1_seminorm_error": common.h1_seminorm(domain, error),
+    }
+    return SolveOutcome(
+        observables=observables,
+        mesh=common.mesh_record(domain, subdivisions),
+        fields=(common.field_record("u", uh, "H1(order=1)", point_dofs=True),),
+        notes={"linear_solver": common.LU_OPTIONS},
     )
 
-    return {
-        "energy": energy,
-        "l2_error": l2_error,
-        "h1_seminorm_error": h1_seminorm_error,
-    }
+
+def solve_manufactured_poisson(refinement: tuple[int, int]) -> dict[str, float]:
+    """Observables only; kept for the existing tests and callers."""
+    return dict(solve(refinement).observables)

@@ -101,6 +101,13 @@ def test_request_from_dict_happy_path():
     assert request.observables == ("energy",)
 
 
+def test_request_to_dict_round_trips():
+    data = _valid_request_dict(observables=["energy", "l2_error"])
+    request = protocol.OracleRequest.from_dict(data)
+    assert request.to_dict() == data
+    assert protocol.OracleRequest.from_dict(request.to_dict()) == request
+
+
 def test_request_from_dict_rejects_wrong_schema():
     with pytest.raises(protocol.ProtocolError):
         protocol.OracleRequest.from_dict(_valid_request_dict(schema="other/1"))

@@ -1,0 +1,20 @@
+{
+  "schema": "sinbad-oracle-result/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "case_id": "17-linear-elasticity/recorded-4x4",
+  "status": {
+    "status": "satisfied"
+  },
+  "observables": {
+    "displacement_magnitude_sq": 4598429831257238989,
+    "forcing_defect": 4395321491720686442,
+    "h1_seminorm_error": 4609882190575775928,
+    "l2_error": 4593336912119383449,
+    "nodal_l2_error": 4575628493132763128,
+    "strain_energy": 4620424708160153749
+  }
+}

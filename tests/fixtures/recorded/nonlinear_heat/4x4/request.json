@@ -1,0 +1,23 @@
+{
+  "schema": "sinbad-oracle-request/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "capability": "nonlinear_heat",
+  "case_id": "03-nonlinear-heat/recorded-4x4",
+  "model_digest": "blake3:recorded-fixture",
+  "refinement": [
+    4,
+    4
+  ],
+  "observables": [
+    "forcing_defect",
+    "h1_seminorm_error",
+    "l2_error",
+    "nodal_l2_error",
+    "steady_l2_error",
+    "total_energy"
+  ]
+}

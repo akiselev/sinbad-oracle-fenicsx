@@ -4,9 +4,10 @@ These are the "solve correctness against the closed-form solution" tests:
 they check the independently-computed L2 error against the manufactured
 solution shrinks under refinement and converges near the expected P1 order,
 and they exercise the adapter's full happy path end-to-end. None of this can
-run on a host without dolfinx (see the lane report), so every test here
-starts with `pytest.importorskip("dolfinx")` and is expected to show as
-skipped, not passed, in that environment.
+run on a host without dolfinx, so every test here starts with
+`pytest.importorskip("dolfinx")` and is expected to show as skipped, not
+passed, in that environment (`scripts/dolfinx-image.sh pytest tests` runs
+them in the official image).
 """
 
 import json
