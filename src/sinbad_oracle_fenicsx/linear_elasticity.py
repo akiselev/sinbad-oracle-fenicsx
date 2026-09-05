@@ -15,8 +15,8 @@ Mirrors `sinbad/cases/17-linear-elasticity.toml` and
   heat, this module derives it with UFL from the exact displacement,
   f = -div(stress(sym_grad(u_exact))), and reports the L2 distance to the
   authored expression as `forcing_defect`;
-* the case's ladder is isotropic `[[2,2,2],[4,4,4]]`; the protocol's
-  two-entry refinement `[n, n]` is read as `[n, n, n]`.
+* the case's ladder is isotropic `[[2,2,2],[4,4,4]]`; a `/2` request addresses it
+  exactly with `[nx, ny, nz]`, and a `/1` two-entry `[n, n]` is read as `[n, n, n]`.
 """
 
 from __future__ import annotations
@@ -62,7 +62,7 @@ def authored_body_force(x):
     )
 
 
-def solve(refinement: tuple[int, int]) -> SolveOutcome:
+def solve(refinement: tuple[int, ...]) -> SolveOutcome:
     subdivisions = common.subdivisions_for(3, refinement)
     domain = common.unit_box(subdivisions)
     v_space = fem.functionspace(domain, ("Lagrange", 1, (3,)))

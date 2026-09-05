@@ -68,7 +68,7 @@ def _spaces(domain):
     return fem.functionspace(domain, basix.ufl.mixed_element([rt0, p0]))
 
 
-def solve(refinement: tuple[int, int]) -> SolveOutcome:
+def solve(refinement: tuple[int, ...]) -> SolveOutcome:
     """The declared 13-mixed-darcy case: uniform unit source, impermeable walls."""
     return solve_with(
         refinement, source_term=lambda x: CASE_SOURCE_TERM, boundary="impermeable"
@@ -76,7 +76,7 @@ def solve(refinement: tuple[int, int]) -> SolveOutcome:
 
 
 def solve_with(
-    refinement: tuple[int, int],
+    refinement: tuple[int, ...],
     *,
     source_term: Callable,
     boundary: str = "impermeable",

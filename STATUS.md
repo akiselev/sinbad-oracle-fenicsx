@@ -1,7 +1,7 @@
 # sinbad-oracle-fenicsx status
 
-**Updated:** 2026-09-01 (W7 lane 6, SV0-C5 D2-D5)
-**Protocol:** `sinbad-oracle-protocol/1` (Sinbad-owned), adapter identity
+**Updated:** 2026-09-04 (coordinator: `sinbad-oracle-request/2` support; W7 lane 6, SV0-C5 D2-D5)
+**Protocol:** `sinbad-oracle-protocol/2` (Sinbad-owned; requests `/1` and `/2` answered, results `/1`), adapter identity
 `sinbad-oracle-fenicsx@0.11.0.post0`, `normalization_version = 1`
 **Live environment:** `dolfinx/dolfinx:stable` (digest and toolchain in `INSTALL.md`), driven
 through `scripts/dolfinx-image.sh`; every number below is a real run of the CLI in that image,
@@ -124,6 +124,18 @@ pass as before.
   for this case).
 
 ## Cross-repo needs (Sinbad; exact)
+
+**Landed in Sinbad `17c56c3` (2026-09-04, GX-CONTRACTS C12.4):** items 1–3 below —
+`OracleCapability::{Poisson, NonlinearHeat, LinearElasticity, Stokes, MixedDarcy}` with these
+wire ids, `sinbad-oracle-request/2` with `refinement: Vec<usize>`, and the capability- and
+observable-id-keyed `run_independent_comparison`; Sinbad replays the recorded fixtures here
+byte for byte (`sinbad-replay-oracle`, `tests/sv0_c5_recorded_oracle.rs`). This repository
+answers `/2` since 2026-09-04: `protocol.py` accepts `sinbad-oracle-request/2` with two (2-D) or
+three (3-D, exact, anisotropic allowed) `refinement` entries and still answers `/1` with exactly
+two, so the recorded fixtures stay regenerable; `common.subdivisions_for` reads a three-entry
+refinement verbatim for a 3-D case and refuses it for a 2-D one. The result document is
+unchanged at `/1`; `normalization_version` stays 1. Still open on the Sinbad side: the plan's
+`ObservableAgreement` hard-codes `energy`, so D2–D4 agreements do not yet bind into a campaign.
 
 1. `sinbad/src/oracle.rs`: `OracleCapability` gains `NonlinearHeat`, `LinearElasticity`,
    `Stokes`, `MixedDarcy` (wire: `nonlinear_heat`, `linear_elasticity`, `stokes`,

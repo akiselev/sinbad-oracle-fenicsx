@@ -1,4 +1,4 @@
-"""Offline tests for the sinbad-oracle-protocol/1 wire (de)serialization.
+"""Offline tests for the sinbad-oracle-protocol/2 wire (de)serialization (requests /1 and /2).
 
 None of these tests import dolfinx; they exercise exactly what ordinary,
 license-free, network-free CI can run.
@@ -116,6 +116,27 @@ def test_request_from_dict_rejects_wrong_schema():
 def test_request_from_dict_rejects_bad_refinement_length():
     with pytest.raises(protocol.ProtocolError):
         protocol.OracleRequest.from_dict(_valid_request_dict(refinement=[8]))
+    with pytest.raises(protocol.ProtocolError):
+        protocol.OracleRequest.from_dict(_valid_request_dict(refinement=[8, 8, 8, 8]))
+
+
+def test_request_v2_addresses_a_3d_ladder_exactly():
+    request = protocol.OracleRequest.from_dict(_valid_request_dict(refinement=[2, 4, 8]))
+    assert request.schema == "sinbad-oracle-request/2"
+    assert request.refinement == (2, 4, 8)
+    assert request.to_dict()["refinement"] == [2, 4, 8]
+
+
+def test_request_v1_is_still_answered_with_exactly_two_entries():
+    data = _valid_request_dict(schema=protocol.ORACLE_REQUEST_SCHEMA_V1)
+    request = protocol.OracleRequest.from_dict(data)
+    assert request.schema == protocol.ORACLE_REQUEST_SCHEMA_V1
+    assert request.refinement == (8, 8)
+    assert request.to_dict() == data
+    with pytest.raises(protocol.ProtocolError):
+        protocol.OracleRequest.from_dict(
+            _valid_request_dict(schema=protocol.ORACLE_REQUEST_SCHEMA_V1, refinement=[8, 8, 8])
+        )
 
 
 def test_request_from_dict_rejects_missing_field():

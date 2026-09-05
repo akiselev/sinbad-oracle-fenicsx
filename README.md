@@ -4,7 +4,7 @@ Independent finite-element verification oracle for
 [Sinbad](../sinbad)'s SV0 trustworthy-simulation-factory (work package
 SV0-C5, `sinbad/docs/simulation-vision/SV0-TRUSTWORTHY-SIMULATION-FACTORY.md`).
 
-This adapter speaks Sinbad's sealed `sinbad-oracle-protocol/1` contract
+This adapter speaks Sinbad's `sinbad-oracle-protocol/2` contract (requests `/1` and `/2`, results `/1`)
 (`sinbad/src/oracle.rs`) and independently recomputes results with
 [FEniCSx/dolfinx](https://fenicsproject.org/) -- it never echoes Sinbad's own
 numbers. Independence is the entire point: this is the adapter that makes
@@ -58,7 +58,7 @@ by `tests/test_recorded_fixtures.py`. `STATUS.md` tabulates the numbers.
 ## Protocol conformance
 
 Invoked exactly as `sinbad-oracle-fenicsx <request-file> <result-file>`.
-Requests/results follow `sinbad-oracle-protocol/1` verbatim; see
+Requests/results follow `sinbad-oracle-protocol/2` verbatim (the `/1` request is still answered); see
 `src/sinbad_oracle_fenicsx/protocol.py` for the exact wire shapes this
 mirrors from `sinbad/src/oracle.rs` and `sinbad/src/verification_execution.rs`
 (including the `FiniteF64` bit-pattern encoding, which is easy to get wrong
@@ -80,10 +80,10 @@ The frozen protocol has no distinct "unavailable" refusal class, so a
 missing dolfinx install is reported honestly as `unsupported_case` -- never
 a fabricated result.
 
-Protocol limitations this adapter works within (recorded as cross-repo
-needs in `STATUS.md`): `OracleCapability` on the Sinbad side declares only
-`poisson` today, and `refinement` is a fixed `[nx, ny]`, so a 3-D case reads
-`[n, n]` as `[n, n, n]` and refuses anything anisotropic.
+Refinement addressing: a `sinbad-oracle-request/2` carries `[nx, ny]` for a
+2-D case and `[nx, ny, nz]` for a 3-D case, read verbatim. A `/1` request (or a
+two-entry `/2` one) addresses a 3-D case only isotropically, `[n, n]` read as
+`[n, n, n]`; anything anisotropic in two entries is refused, never guessed.
 
 ## Raw evidence
 
@@ -100,7 +100,7 @@ this is the adapter-side complement. A refusal retains nothing.
 
 ```
 src/sinbad_oracle_fenicsx/
-  protocol.py           # sinbad-oracle-protocol/1 (de)serialization, no third-party deps
+  protocol.py           # sinbad-oracle-protocol/2 (de)serialization, no third-party deps
   registry.py           # capability table: case, model, module, observable normalization
   outcome.py            # SolveOutcome / UnsupportedCase contract between adapter and modules
   evidence.py           # raw-evidence sidecar writer (numpy only when writing)

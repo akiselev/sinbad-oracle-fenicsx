@@ -56,7 +56,7 @@ def viscous_stress(u):
     return 2.0 * VISCOSITY * strain_rate(u)
 
 
-def solve(refinement: tuple[int, int]) -> SolveOutcome:
+def solve(refinement: tuple[int, ...]) -> SolveOutcome:
     subdivisions = common.subdivisions_for(2, refinement)
     domain = common.unit_box(subdivisions)
     p2 = basix.ufl.element("Lagrange", domain.basix_cell(), 2, shape=(2,))

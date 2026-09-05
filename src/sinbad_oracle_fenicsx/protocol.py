@@ -1,4 +1,4 @@
-"""Typed (de)serialization for the sinbad-oracle-protocol/1 wire contract.
+"""Typed (de)serialization for the sinbad-oracle-protocol/2 wire contract (requests /1 and /2, results /1).
 
 Sinbad (the frozen product side, see `sinbad/src/oracle.rs`) owns this
 schema. This module mirrors it exactly for the FEniCSx adapter and adds no
@@ -34,8 +34,15 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping
 
-ORACLE_PROTOCOL_SCHEMA = "sinbad-oracle-protocol/1"
-ORACLE_REQUEST_SCHEMA = "sinbad-oracle-request/1"
+ORACLE_PROTOCOL_SCHEMA = "sinbad-oracle-protocol/2"
+#: `sinbad-oracle-request/2` (Sinbad `17c56c3`, C12.4): `refinement` has two entries for a 2-D
+#: case or three for a 3-D case, so a 3-D ladder is addressed exactly. The result document is
+#: unchanged at `/1`.
+ORACLE_REQUEST_SCHEMA = "sinbad-oracle-request/2"
+#: `sinbad-oracle-request/1` (exactly two `refinement` entries) is still answered so the
+#: recorded fixtures under `tests/fixtures/recorded/` stay regenerable.
+ORACLE_REQUEST_SCHEMA_V1 = "sinbad-oracle-request/1"
+ACCEPTED_REQUEST_SCHEMAS = frozenset({ORACLE_REQUEST_SCHEMA_V1, ORACLE_REQUEST_SCHEMA})
 ORACLE_RESULT_SCHEMA = "sinbad-oracle-result/1"
 
 # The protocol's `OracleRefusalClass` enum, `snake_case`-rendered.
@@ -45,7 +52,7 @@ REFUSAL_CLASSES = frozenset(
 
 
 class ProtocolError(ValueError):
-    """A request/result document does not match sinbad-oracle-protocol/1."""
+    """A request/result document does not match sinbad-oracle-protocol/2 (or the /1 request)."""
 
 
 def finite_f64_bits(value: float) -> int:
@@ -103,25 +110,33 @@ class OracleRequest:
     capability: str
     case_id: str
     model_digest: str
-    refinement: tuple[int, int]
+    refinement: tuple[int, ...]
     observables: tuple[str, ...]
 
     @staticmethod
     def from_dict(data: Mapping) -> "OracleRequest":
         try:
             schema = str(data["schema"])
-            if schema != ORACLE_REQUEST_SCHEMA:
+            if schema not in ACCEPTED_REQUEST_SCHEMAS:
                 raise ProtocolError(
-                    f"unsupported request schema {schema!r}, expected {ORACLE_REQUEST_SCHEMA!r}"
+                    f"unsupported request schema {schema!r}, expected one of "
+                    f"{sorted(ACCEPTED_REQUEST_SCHEMAS)}"
                 )
             tool = OracleToolIdentity.from_dict(data["tool"])
             capability = str(data["capability"])
             case_id = str(data["case_id"])
             model_digest = str(data["model_digest"])
-            refinement_raw = data["refinement"]
-            if len(refinement_raw) != 2:
-                raise ProtocolError("refinement must have exactly two entries")
-            refinement = (int(refinement_raw[0]), int(refinement_raw[1]))
+            refinement_raw = list(data["refinement"])
+            if schema == ORACLE_REQUEST_SCHEMA_V1:
+                if len(refinement_raw) != 2:
+                    raise ProtocolError(
+                        f"{ORACLE_REQUEST_SCHEMA_V1} refinement must have exactly two entries"
+                    )
+            elif len(refinement_raw) not in (2, 3):
+                raise ProtocolError(
+                    f"{ORACLE_REQUEST_SCHEMA} refinement must have two (2-D) or three (3-D) entries"
+                )
+            refinement = tuple(int(entry) for entry in refinement_raw)
             observables = tuple(str(name) for name in data["observables"])
         except (KeyError, TypeError, ValueError) as error:
             raise ProtocolError(f"malformed oracle request: {error}") from error

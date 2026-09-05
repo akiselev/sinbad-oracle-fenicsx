@@ -111,7 +111,7 @@ def _solve_newton(problem: NonlinearProblem, unknown, label: str) -> int:
     return int(iterations)
 
 
-def solve(refinement: tuple[int, int]) -> SolveOutcome:
+def solve(refinement: tuple[int, ...]) -> SolveOutcome:
     subdivisions = common.subdivisions_for(2, refinement)
     domain = common.unit_box(subdivisions)
     v_space = fem.functionspace(domain, ("Lagrange", 1))

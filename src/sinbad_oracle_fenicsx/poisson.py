@@ -34,7 +34,7 @@ from .outcome import SolveOutcome
 CAPABILITY = "poisson"
 
 
-def solve(refinement: tuple[int, int]) -> SolveOutcome:
+def solve(refinement: tuple[int, ...]) -> SolveOutcome:
     """Solves the 01-poisson manufactured case at one [nx, ny] refinement."""
     subdivisions = common.subdivisions_for(2, refinement)
     domain = common.unit_box(subdivisions)
@@ -69,6 +69,6 @@ def solve(refinement: tuple[int, int]) -> SolveOutcome:
     )
 
 
-def solve_manufactured_poisson(refinement: tuple[int, int]) -> dict[str, float]:
+def solve_manufactured_poisson(refinement: tuple[int, ...]) -> dict[str, float]:
     """Observables only; kept for the existing tests and callers."""
     return dict(solve(refinement).observables)

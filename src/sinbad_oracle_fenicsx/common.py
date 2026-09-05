@@ -22,26 +22,33 @@ from .outcome import FieldRecord, MeshRecord, UnsupportedCase
 COMM = MPI.COMM_WORLD
 
 
-def subdivisions_for(dimension: int, refinement: tuple[int, int]) -> tuple[int, ...]:
-    """Maps the protocol's two-entry `refinement` onto the case's box ladder.
+def subdivisions_for(dimension: int, refinement: tuple[int, ...]) -> tuple[int, ...]:
+    """Maps the request's `refinement` onto the case's box ladder.
 
-    `sinbad-oracle-protocol/1` carries exactly `[nx, ny]`. A 2-D case reads it
-    verbatim. A 3-D case (elasticity, mixed Darcy) has an isotropic
-    `[n, n, n]` ladder in its Sinbad case file, so `[n, n]` is read as
-    `[n, n, n]`; an anisotropic request is refused rather than guessed
-    (recorded as a protocol limitation in STATUS.md).
+    `sinbad-oracle-request/2` carries `[nx, ny]` for a 2-D case and `[nx, ny, nz]` for a
+    3-D one, read verbatim. A 3-D case still accepts the `/1` two-entry form `[n, n]` as the
+    isotropic `[n, n, n]` of its Sinbad case ladder; an anisotropic two-entry request is
+    refused rather than guessed, and a three-entry request cannot address a 2-D case.
     """
-    nx, ny = refinement
-    if nx < 1 or ny < 1:
-        raise UnsupportedCase(f"refinement subdivisions must be positive, got {refinement}")
+    if any(entry < 1 for entry in refinement):
+        raise UnsupportedCase(
+            f"refinement subdivisions must be positive, got {list(refinement)}"
+        )
     if dimension == 2:
-        return (nx, ny)
+        if len(refinement) != 2:
+            raise UnsupportedCase(
+                f"refinement {list(refinement)} cannot address a 2-D case; expected [nx, ny]"
+            )
+        return tuple(refinement)
     if dimension == 3:
+        if len(refinement) == 3:
+            return tuple(refinement)
+        nx, ny = refinement
         if nx != ny:
             raise UnsupportedCase(
-                f"refinement {list(refinement)} cannot address a 3-D case through "
-                "sinbad-oracle-protocol/1's two-entry refinement; only an isotropic [n, n] "
-                "(read as [n, n, n]) is supported"
+                f"refinement {list(refinement)} cannot address a 3-D case through a two-entry "
+                "refinement; send [nx, ny, nz] under sinbad-oracle-request/2, or an isotropic "
+                "[n, n] (read as [n, n, n])"
             )
         return (nx, nx, nx)
     raise UnsupportedCase(f"unsupported case dimension {dimension}")

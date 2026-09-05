@@ -1,7 +1,7 @@
 """sinbad-oracle-fenicsx executable entrypoint (SV0-C5).
 
 Invoked exactly as `sinbad-oracle-fenicsx <request-file> <result-file>` per
-`sinbad-oracle-protocol/1` (see `sinbad/src/oracle.rs`'s `invoke`): bulk
+`sinbad-oracle-protocol/2` (see `sinbad/src/oracle.rs`'s `invoke`): bulk
 inputs/outputs travel through these two files, never worker JSON frames.
 
 Refusal ordering mirrors the reference fake oracle
