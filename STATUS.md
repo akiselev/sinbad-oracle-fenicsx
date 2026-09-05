@@ -134,7 +134,8 @@ answers `/2` since 2026-09-04: `protocol.py` accepts `sinbad-oracle-request/2` w
 three (3-D, exact, anisotropic allowed) `refinement` entries and still answers `/1` with exactly
 two, so the recorded fixtures stay regenerable; `common.subdivisions_for` reads a three-entry
 refinement verbatim for a 3-D case and refuses it for a 2-D one. The result document is
-unchanged at `/1`; `normalization_version` stays 1. Still open on the Sinbad side: the plan's
+unchanged at `/1`; `normalization_version` stays 1. Gate on 2026-09-04: ruff check/format clean, offline
+70 passed / 6 skipped, `dolfinx/dolfinx:stable` image suite 102 passed / 1 skipped. Still open on the Sinbad side: the plan's
 `ObservableAgreement` hard-codes `energy`, so D2–D4 agreements do not yet bind into a campaign.
 
 1. `sinbad/src/oracle.rs`: `OracleCapability` gains `NonlinearHeat`, `LinearElasticity`,
