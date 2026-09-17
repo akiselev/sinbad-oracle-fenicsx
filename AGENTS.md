@@ -1,9 +1,10 @@
 # Agent rules for sinbad-oracle-fenicsx
 
-- This repository is the only place Python lives in the Sinbad federation.
-  Core Sinbad CI must stay Python- and network-free; never make a Sinbad-side
-  test depend on this repository being installed.
-- Sinbad owns `sinbad-oracle-protocol/1` (`sinbad/src/oracle.rs`).
+- This repository owns the Python/FEniCSx oracle adapter. Core numerical runtime
+  and ordinary tests must not require Python, network access, or this adapter.
+  Optional validation scripts and explicitly enabled live-oracle tests are separate
+  from that requirement; unavailable oracle evidence is not a passing result.
+- Sinbad owns `sinbad-oracle-protocol/2` (requests `/1` and `/2`, results `/1`) (`sinbad/src/oracle.rs`).
   `protocol.py` mirrors it verbatim; a wire change starts on the Sinbad side.
 - One capability per Sinbad case file, registered in `registry.py`, solving
   the *declared* problem from the case's own data with dolfinx. Never read
