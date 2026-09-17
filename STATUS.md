@@ -1,6 +1,21 @@
 # sinbad-oracle-fenicsx status
 
-**Updated:** 2026-09-04 (coordinator: `sinbad-oracle-request/2` support; W7 lane 6, SV0-C5 D2-D5)
+SHOW-2 / SC-W2 first matching gate (2026-09-17): two new independently
+implemented capabilities. electrothermal_component solves the 3D 5 V reference
+with mixed P1 UFL residual/Jacobian, BDF1 startup then BDF2, temperature feedback
+and per-step reaction/energy balance. two_material_conduction assembles two
+separate submeshes and a checked matching DOF union; analytic 320 K interface
+and 160 W/m² flux pass at three resolutions. Coordinate matching tolerates
+1e-12 m roundoff and requires uniqueness and complete coverage.
+
+Validation: ruff check/format pass; offline pytest 76 passed, 8 skipped;
+Docker/dolfinx pytest 110 passed, 1 skipped. All capability fixtures re-recorded;
+raw evidence retained by the optional --retain-raw recorder. The mixed-Darcy
+case still returns its honest incompatibility refusal. Numerical comparisons
+are not experimental physical validation. See NORMALIZATION.md and fixtures.
+
+
+**Updated:** 2026-09-17 (SHOW-2 / SC-W2 matching reference capabilities)
 **Protocol:** `sinbad-oracle-protocol/2` (Sinbad-owned; requests `/1` and `/2` answered, results `/1`), adapter identity
 `sinbad-oracle-fenicsx@0.11.0.post0`, `normalization_version = 1`
 **Live environment:** `dolfinx/dolfinx:stable` (digest and toolchain in `INSTALL.md`), driven

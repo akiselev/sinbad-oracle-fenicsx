@@ -1,0 +1,463 @@
+{
+  "capability": "two_material_conduction",
+  "extraction": {
+    "modules": {
+      "adapter.py": "sha256:8f61eb1e108a5a03da62e3b0276a62ca901c568623175d4011c574a570c58bcf",
+      "common.py": "sha256:1dc5b7de1541d4b87ff7ca3cc60469f4abd7d4424ae6a48dd4b6a752b9b8944a",
+      "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
+      "protocol.py": "sha256:b444a4d6741502145b10a7c6f46d31f6928b8fb2f40aab07affb335d7af8e975",
+      "two_material_conduction.py": "sha256:f7608c7405c851f82fea820355351707b4065958180f86a51429bbdb451a68e0"
+    },
+    "package_digest": "sha256:0ed41d1c6432dbef516591480a058958a7920f544bd1b7562ff3105e6ce19b88",
+    "package_scripts": {
+      "__init__.py": "sha256:1e886671ff7639b7dba7d6e2854677c6b169e446ab6a7fb2bcf0f9360dde18af",
+      "__main__.py": "sha256:96a7f02cc68bbd5cea5e9d1f23f4f888a77d4e261f9d416e669164925b7fcdfa",
+      "adapter.py": "sha256:8f61eb1e108a5a03da62e3b0276a62ca901c568623175d4011c574a570c58bcf",
+      "capability.py": "sha256:89152fc3bf17956eb052bbc8c9f13fbf86e1da82a2695c893adbda186c47d46f",
+      "common.py": "sha256:1dc5b7de1541d4b87ff7ca3cc60469f4abd7d4424ae6a48dd4b6a752b9b8944a",
+      "electrothermal_component.py": "sha256:7a495e4517b05a410885b9f19b94b31e54d7519eb9d2c16a313b41c656389fba",
+      "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
+      "linear_elasticity.py": "sha256:980bacc43b53bcc6f4bdfbb3fe0b6def0d71b379215258ce0f4da967ee6d9308",
+      "mixed_darcy.py": "sha256:cfeb1bd8e6cf06b9bb5d01232f08e887bcd67ee4ba9c396ad012e79844fa0c4b",
+      "nonlinear_heat.py": "sha256:3c01b9a475fa366567e8bd2e0180fbf3f54c9aac8202d5732ed748c18a38e701",
+      "normalization_doc.py": "sha256:e2dbfcd3e2d9c508d08e3da76b6f8ddd5a4d8a21c4c8fd5ac5034d307f98d51b",
+      "outcome.py": "sha256:42e29c02100209bb9a43f4c5e260317f9b0e22186645081bb0168dcce5205a89",
+      "poisson.py": "sha256:bc69ce223dc078e46dc4adf0891415ef05c88634b843cf2fda8ebfaa5cbee906",
+      "protocol.py": "sha256:b444a4d6741502145b10a7c6f46d31f6928b8fb2f40aab07affb335d7af8e975",
+      "registry.py": "sha256:c2e15094174056940c4a6217ab879d94ae73a7a1fad677b0a5f4813747c5d134",
+      "stokes.py": "sha256:c3748a0be4d9b0cf68c39ea9f3955460f2809c60259813a4a5474ca02e55c4f5",
+      "two_material_conduction.py": "sha256:f7608c7405c851f82fea820355351707b4065958180f86a51429bbdb451a68e0"
+    }
+  },
+  "mesh": {
+    "cell_count": 96,
+    "cell_type": "tetrahedron",
+    "dimension": 3,
+    "file": "mesh.npz",
+    "sha256": "sha256:ae0a50309e55b5d268b76d3b983927861e07cbe1e2d4f0ca1281f15d37680bdc",
+    "subdivisions": [
+      4,
+      2,
+      2
+    ],
+    "vertex_count": 45
+  },
+  "model": "TwoMaterials",
+  "normalization": {
+    "heat_flow": "mean of the two component volume-averaged axial heat-flux densities, watts per square metre",
+    "interface_temperature": "arithmetic mean of matching interface nodal temperatures, kelvin"
+  },
+  "normalization_version": 1,
+  "notes": {
+    "component_heat_flow": [
+      160.00000000000043,
+      159.99999999999864
+    ],
+    "method": "separate submesh stiffness matrices with matching trace identification",
+    "submesh_dof_to_union": [
+      [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      [
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        1,
+        38,
+        39,
+        40,
+        41,
+        2,
+        42,
+        43,
+        4,
+        3,
+        44,
+        10,
+        7,
+        12,
+        9,
+        14
+      ]
+    ],
+    "submeshes": [
+      {
+        "cells": 48,
+        "geometry": [
+          [
+            0.5,
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5,
+            0.0
+          ],
+          [
+            0.5,
+            0.0,
+            0.5
+          ],
+          [
+            0.5,
+            0.5,
+            0.5
+          ],
+          [
+            0.25,
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            1.0,
+            0.0
+          ],
+          [
+            0.5,
+            1.0,
+            0.5
+          ],
+          [
+            0.25,
+            0.5,
+            0.0
+          ],
+          [
+            0.5,
+            0.0,
+            1.0
+          ],
+          [
+            0.5,
+            0.5,
+            1.0
+          ],
+          [
+            0.25,
+            0.0,
+            0.5
+          ],
+          [
+            0.25,
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            1.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.25,
+            1.0,
+            0.0
+          ],
+          [
+            0.25,
+            1.0,
+            0.5
+          ],
+          [
+            0.0,
+            0.5,
+            0.0
+          ],
+          [
+            0.25,
+            0.0,
+            1.0
+          ],
+          [
+            0.25,
+            0.5,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.5
+          ],
+          [
+            0.0,
+            0.5,
+            0.5
+          ],
+          [
+            0.25,
+            1.0,
+            1.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.5
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.5,
+            1.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "cells": 48,
+        "geometry": [
+          [
+            0.75,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.5,
+            0.0
+          ],
+          [
+            1.0,
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            0.0,
+            0.5
+          ],
+          [
+            0.75,
+            0.5,
+            0.0
+          ],
+          [
+            0.75,
+            0.0,
+            0.5
+          ],
+          [
+            1.0,
+            1.0,
+            0.5
+          ],
+          [
+            0.75,
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            0.5,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.75,
+            1.0,
+            0.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            0.75,
+            1.0,
+            0.5
+          ],
+          [
+            0.5,
+            0.5,
+            0.0
+          ],
+          [
+            0.75,
+            0.0,
+            1.0
+          ],
+          [
+            0.75,
+            0.5,
+            1.0
+          ],
+          [
+            0.5,
+            0.0,
+            0.5
+          ],
+          [
+            0.5,
+            0.5,
+            0.5
+          ],
+          [
+            0.75,
+            1.0,
+            1.0
+          ],
+          [
+            0.5,
+            1.0,
+            0.0
+          ],
+          [
+            0.5,
+            1.0,
+            0.5
+          ],
+          [
+            0.5,
+            0.0,
+            1.0
+          ],
+          [
+            0.5,
+            0.5,
+            1.0
+          ],
+          [
+            0.5,
+            1.0,
+            1.0
+          ]
+        ]
+      }
+    ]
+  },
+  "observables": {
+    "heat_flow": 159.99999999999955,
+    "interface_temperature": 319.99999999999983
+  },
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "request": {
+    "capability": "two_material_conduction",
+    "case_id": "two-material-conduction/recorded-2x2x2",
+    "model_digest": "blake3:recorded-fixture",
+    "observables": [
+      "heat_flow",
+      "interface_temperature"
+    ],
+    "refinement": [
+      2,
+      2,
+      2
+    ],
+    "schema": "sinbad-oracle-request/2",
+    "tool": {
+      "name": "sinbad-oracle-fenicsx",
+      "normalization_version": 1,
+      "version": "0.11.0.post0"
+    }
+  },
+  "schema": "sinbad-oracle-fenicsx-evidence/1",
+  "sinbad_case": "two-material-conduction",
+  "solution": {
+    "fields": [
+      {
+        "components": 1,
+        "dof_coordinates": "T_0__dof_coordinates",
+        "dof_count": 27,
+        "name": "T_0",
+        "space": "H1(order=1)"
+      },
+      {
+        "components": 1,
+        "dof_coordinates": "T_1__dof_coordinates",
+        "dof_count": 27,
+        "name": "T_1",
+        "space": "H1(order=1)"
+      }
+    ],
+    "file": "solution.npz",
+    "sha256": "sha256:166adb5aa05fa16f17b13d79f448fbbcb0364d4eadbe27a16456bafd420ccced"
+  },
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "normalization_version": 1,
+    "version": "0.11.0.post0"
+  },
+  "toolchain": {
+    "basix": "0.11.0",
+    "dolfinx": "0.11.0.post0",
+    "dolfinx_git_commit": "fefdb2201b80a8f59527de2d461b9056906661d8",
+    "mpi4py": "4.1.2",
+    "numpy": "2.4.6",
+    "petsc": "3.25.1",
+    "petsc4py": "3.25.1",
+    "python": "3.12.3",
+    "ufl": "2026.1.0"
+  }
+}

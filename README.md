@@ -27,6 +27,8 @@ promotion path therefore needs no per-physics code on its side.
 | `nonlinear_heat` | `03-nonlinear-heat` | `NonlinearHeat` | P1, k(T) = 1 + 0.2 (T - 300), BDF2 0.05 to 0.4 with Newton per step, plus a steady Newton companion | satisfied |
 | `linear_elasticity` | `17-linear-elasticity` | `LinearElasticity` | P1 vector, unit cube, lambda = 1.25, mu = 1, manufactured displacement | satisfied |
 | `stokes` | `25-stokes` | `StokesFlow` | Taylor-Hood P2/P1, mu = 1.7, curl body force, no-slip cavity, zero-mean pressure | satisfied; reproduces Sinbad's C11.20 solution RMS to five digits |
+| `electrothermal_component` | `electrothermal-component-3d` | `ElectrothermalComponent` | 3D mixed P1, temperature feedback, 5 V, BDF2 to 1 s | satisfied; raw fields and per-step energy balance |
+| `two_material_conduction` | `two-material-conduction` | `TwoMaterials` | separate submeshes, k = 1 / 4, matching trace elimination | satisfied; interface 320 K, flux 160 W/m² |
 | `mixed_darcy` | `13-mixed-darcy` | `MixedDarcy` | RT0/P0, impermeable walls, uniform unit source | **refused, typed**: the declared problem has no solution (see below) |
 
 The recorded outputs of the live runs (request, result, evidence manifest

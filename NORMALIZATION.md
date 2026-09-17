@@ -16,6 +16,21 @@ Adding an observable id to a capability is additive and keeps this version. Chan
 the definition behind an existing id bumps `adapter.NORMALIZATION_VERSION` and this
 document together.
 
+## `two_material_conduction` -- `two-material-conduction` (`TwoMaterials`, 3-D)
+
+| observable id | definition |
+|---|---|
+| `interface_temperature` | arithmetic mean of matching interface nodal temperatures, kelvin |
+| `heat_flow` | mean of the two component volume-averaged axial heat-flux densities, watts per square metre |
+
+## `electrothermal_component` -- `electrothermal-component-3d` (`ElectrothermalComponent`, 3-D)
+
+| observable id | definition |
+|---|---|
+| `electrical_power` | degree-two tetrahedral quadrature integral of sigma(T) * dot(grad(V), grad(V)) at t=1 s, watts |
+| `thermal_energy` | degree-two tetrahedral quadrature integral of 1e6 * T at t=1 s, joules |
+| `temperature_rise` | degree-two tetrahedral quadrature integral of T - 300 at t=1 s, kelvin cubic metres |
+
 ## `poisson` -- `01-poisson` (`Poisson`, 2-D)
 
 | observable id | definition |

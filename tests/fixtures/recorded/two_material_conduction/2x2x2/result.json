@@ -1,0 +1,16 @@
+{
+  "schema": "sinbad-oracle-result/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "case_id": "two-material-conduction/recorded-2x2x2",
+  "status": {
+    "status": "satisfied"
+  },
+  "observables": {
+    "heat_flow": 4639833516098453488,
+    "interface_temperature": 4644337115725823997
+  }
+}

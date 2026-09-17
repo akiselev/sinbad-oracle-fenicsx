@@ -1,0 +1,17 @@
+{
+  "schema": "sinbad-oracle-result/1",
+  "tool": {
+    "name": "sinbad-oracle-fenicsx",
+    "version": "0.11.0.post0",
+    "normalization_version": 1
+  },
+  "case_id": "electrothermal-component-3d/recorded-2x2x2",
+  "status": {
+    "status": "satisfied"
+  },
+  "observables": {
+    "electrical_power": 4618588002078438111,
+    "temperature_rise": 4527401259414911442,
+    "thermal_energy": 4644071508504706164
+  }
+}

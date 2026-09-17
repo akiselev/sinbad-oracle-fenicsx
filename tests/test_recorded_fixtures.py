@@ -85,11 +85,12 @@ def test_recorded_manifest_agrees_with_the_result(fixture):
     assert manifest["mesh"]["sha256"].startswith("sha256:")
     assert manifest["solution"]["sha256"].startswith("sha256:")
     assert manifest["extraction"]["modules"][f"{spec.module}.py"].startswith("sha256:")
-    assert manifest["mesh"]["subdivisions"] == (
-        list(manifest["request"]["refinement"])
-        if spec.dimension == 2
-        else [manifest["request"]["refinement"][0]] * 3
-    )
+    expected = list(manifest["request"]["refinement"])
+    if spec.dimension == 3 and len(expected) == 2:
+        expected = [expected[0]] * 3
+    if spec.capability == "two_material_conduction":
+        expected[0] *= 2  # union mesh; requested refinement addresses each submesh
+    assert manifest["mesh"]["subdivisions"] == expected
 
 
 def test_recorded_values_match_sinbads_own_contract_records():

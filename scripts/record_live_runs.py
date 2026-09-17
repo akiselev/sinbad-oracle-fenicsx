@@ -25,6 +25,8 @@ from sinbad_oracle_fenicsx.adapter import _actual_tool_identity
 
 # The refinement ladders the Sinbad case files author (3-D ladders as [n, n]).
 LADDERS = {
+    "two_material_conduction": [(2, 2, 2)],
+    "electrothermal_component": [(2, 2, 2)],
     "poisson": [(4, 4), (8, 8), (16, 16)],
     "nonlinear_heat": [(2, 2), (4, 4), (8, 8)],
     "linear_elasticity": [(2, 2), (4, 4)],
@@ -40,16 +42,17 @@ def main(out_root: Path) -> int:
         return 1
     for capability, ladder in LADDERS.items():
         spec = registry.CAPABILITIES[capability]
-        for nx, ny in ladder:
+        for refinement in ladder:
+            label = "x".join(map(str, refinement))
             with tempfile.TemporaryDirectory() as tmp:
                 io = Path(tmp)
                 request = {
                     "schema": protocol.ORACLE_REQUEST_SCHEMA,
                     "tool": tool.to_dict(),
                     "capability": capability,
-                    "case_id": f"{spec.sinbad_case}/recorded-{nx}x{ny}",
+                    "case_id": f"{spec.sinbad_case}/recorded-{label}",
                     "model_digest": "blake3:recorded-fixture",
-                    "refinement": [nx, ny],
+                    "refinement": list(refinement),
                     "observables": sorted(spec.observables),
                 }
                 (io / "request.json").write_text(json.dumps(request, indent=2))
@@ -65,9 +68,9 @@ def main(out_root: Path) -> int:
                     text=True,
                 )
                 if completed.returncode != 0:
-                    print(f"{capability} {nx}x{ny}: crash\n{completed.stderr}", file=sys.stderr)
+                    print(f"{capability} {label}: crash\n{completed.stderr}", file=sys.stderr)
                     return 1
-                target = out_root / capability / f"{nx}x{ny}"
+                target = out_root / capability / f"{label}"
                 if target.exists():
                     shutil.rmtree(target)
                 target.mkdir(parents=True)
@@ -79,13 +82,15 @@ def main(out_root: Path) -> int:
                 result = json.loads((target / "result.json").read_text())
                 if manifest.exists():
                     shutil.copy(manifest, target / "manifest.json")
+                    if "--retain-raw" in sys.argv[2:]:
+                        shutil.copytree(manifest.parent, target / "raw")
                     values = {
                         k: protocol.bits_to_finite_f64(v)
                         for k, v in result["observables"].items()
                     }
-                    print(f"{capability} {nx}x{ny}: satisfied {json.dumps(values)}")
+                    print(f"{capability} {label}: satisfied {json.dumps(values)}")
                 else:
-                    print(f"{capability} {nx}x{ny}: {json.dumps(result['status'])}")
+                    print(f"{capability} {label}: {json.dumps(result['status'])}")
     return 0
 
 

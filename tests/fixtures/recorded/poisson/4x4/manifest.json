@@ -2,29 +2,31 @@
   "capability": "poisson",
   "extraction": {
     "modules": {
-      "adapter.py": "sha256:9743eb6b7b814c0eeb4a64bab580381ce4d0b7075fab00305ecbb1bc00a2709e",
-      "common.py": "sha256:f1c809eb298edd4daa85b5ebafe068b52e316a82599dd2aecaa8379afb59539a",
+      "adapter.py": "sha256:8f61eb1e108a5a03da62e3b0276a62ca901c568623175d4011c574a570c58bcf",
+      "common.py": "sha256:1dc5b7de1541d4b87ff7ca3cc60469f4abd7d4424ae6a48dd4b6a752b9b8944a",
       "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
-      "poisson.py": "sha256:e19bd0001aebfc59550d5b08bc935e24aefc8d8d690aaf1f180e2ece98ea8e33",
-      "protocol.py": "sha256:7458527387ef0ffd7b81c8f18c2dc7deda0558d168839423ebe3cd74725a26bb"
+      "poisson.py": "sha256:bc69ce223dc078e46dc4adf0891415ef05c88634b843cf2fda8ebfaa5cbee906",
+      "protocol.py": "sha256:b444a4d6741502145b10a7c6f46d31f6928b8fb2f40aab07affb335d7af8e975"
     },
-    "package_digest": "sha256:384a6ea727b348b5eed14d3e6aa3edf6dccc936470bd6f49c5fc40a009ca4023",
+    "package_digest": "sha256:0ed41d1c6432dbef516591480a058958a7920f544bd1b7562ff3105e6ce19b88",
     "package_scripts": {
-      "__init__.py": "sha256:34c39e940387d47264486722b037ad3063d98d5a55995cd824f16e0631a5f7ee",
+      "__init__.py": "sha256:1e886671ff7639b7dba7d6e2854677c6b169e446ab6a7fb2bcf0f9360dde18af",
       "__main__.py": "sha256:96a7f02cc68bbd5cea5e9d1f23f4f888a77d4e261f9d416e669164925b7fcdfa",
-      "adapter.py": "sha256:9743eb6b7b814c0eeb4a64bab580381ce4d0b7075fab00305ecbb1bc00a2709e",
+      "adapter.py": "sha256:8f61eb1e108a5a03da62e3b0276a62ca901c568623175d4011c574a570c58bcf",
       "capability.py": "sha256:89152fc3bf17956eb052bbc8c9f13fbf86e1da82a2695c893adbda186c47d46f",
-      "common.py": "sha256:f1c809eb298edd4daa85b5ebafe068b52e316a82599dd2aecaa8379afb59539a",
+      "common.py": "sha256:1dc5b7de1541d4b87ff7ca3cc60469f4abd7d4424ae6a48dd4b6a752b9b8944a",
+      "electrothermal_component.py": "sha256:7a495e4517b05a410885b9f19b94b31e54d7519eb9d2c16a313b41c656389fba",
       "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
-      "linear_elasticity.py": "sha256:ee57c7ce25c3e5491cb2b94d91883dff0091eca227433bd8a64ef7de26b33fda",
-      "mixed_darcy.py": "sha256:15cfcf9d959ba6da2c13af00772b2f2a2dd816ffd20dab38907c8b8ec94efe11",
-      "nonlinear_heat.py": "sha256:6c78609a0736c78c30adc64a372f34834102f5de898cd60a9e9ffb939e176bc1",
+      "linear_elasticity.py": "sha256:980bacc43b53bcc6f4bdfbb3fe0b6def0d71b379215258ce0f4da967ee6d9308",
+      "mixed_darcy.py": "sha256:cfeb1bd8e6cf06b9bb5d01232f08e887bcd67ee4ba9c396ad012e79844fa0c4b",
+      "nonlinear_heat.py": "sha256:3c01b9a475fa366567e8bd2e0180fbf3f54c9aac8202d5732ed748c18a38e701",
       "normalization_doc.py": "sha256:e2dbfcd3e2d9c508d08e3da76b6f8ddd5a4d8a21c4c8fd5ac5034d307f98d51b",
       "outcome.py": "sha256:42e29c02100209bb9a43f4c5e260317f9b0e22186645081bb0168dcce5205a89",
-      "poisson.py": "sha256:e19bd0001aebfc59550d5b08bc935e24aefc8d8d690aaf1f180e2ece98ea8e33",
-      "protocol.py": "sha256:7458527387ef0ffd7b81c8f18c2dc7deda0558d168839423ebe3cd74725a26bb",
-      "registry.py": "sha256:d4af0f82d30d60a4fbf2af047d728a75f4744de97acf9491e87105c4bbf0410d",
-      "stokes.py": "sha256:7075d112629ee75531888335e7a445a7462e0b9e6379a9c18fa982eebb387dc8"
+      "poisson.py": "sha256:bc69ce223dc078e46dc4adf0891415ef05c88634b843cf2fda8ebfaa5cbee906",
+      "protocol.py": "sha256:b444a4d6741502145b10a7c6f46d31f6928b8fb2f40aab07affb335d7af8e975",
+      "registry.py": "sha256:c2e15094174056940c4a6217ab879d94ae73a7a1fad677b0a5f4813747c5d134",
+      "stokes.py": "sha256:c3748a0be4d9b0cf68c39ea9f3955460f2809c60259813a4a5474ca02e55c4f5",
+      "two_material_conduction.py": "sha256:f7608c7405c851f82fea820355351707b4065958180f86a51429bbdb451a68e0"
     }
   },
   "mesh": {
@@ -72,7 +74,7 @@
       4,
       4
     ],
-    "schema": "sinbad-oracle-request/1",
+    "schema": "sinbad-oracle-request/2",
     "tool": {
       "name": "sinbad-oracle-fenicsx",
       "normalization_version": 1,

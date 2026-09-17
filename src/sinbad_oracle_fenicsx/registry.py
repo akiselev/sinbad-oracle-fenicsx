@@ -9,14 +9,12 @@ importable.
 
 Each entry mirrors exactly one Sinbad case file (`sinbad/cases/<case>.toml`)
 and its `.res` model. The capability id is the string Sinbad's
-`OracleCapability` enum renders on the wire (`snake_case`); today Sinbad
-declares only `poisson`, so the other four are this adapter's proposal for
-the enum's extension (recorded in STATUS.md as a cross-repo need) -- the
-adapter answers them honestly either way.
+`OracleCapability` enum renders on the wire (`snake_case`); Sinbad declares all seven capability ids. Each names a
+fixed authored reference problem, not an arbitrary case-parameter solver.
 
 Normalization contract, version 1 (`OracleToolIdentity.normalization_version`):
 every observable is a single finite IEEE-754 double in the SI unit system the
-case authors, computed by exact quadrature of the discrete solution on the
+case authors, computed by the declared quadrature of the discrete solution on the
 mesh the adapter itself generated. The per-observable definitions live in
 `NORMALIZATION.md` and are repeated on each `CapabilitySpec.normalization`
 so a mismatch is caught by `tests/test_registry.py`. Adding an observable to
@@ -71,6 +69,29 @@ _NODAL = (
 
 CAPABILITIES: Mapping[str, CapabilitySpec] = MappingProxyType(
     {
+        "two_material_conduction": _spec(
+            "two_material_conduction",
+            "two-material-conduction",
+            "TwoMaterials",
+            3,
+            "two_material_conduction",
+            {
+                "interface_temperature": "arithmetic mean of matching interface nodal temperatures, kelvin",
+                "heat_flow": "mean of the two component volume-averaged axial heat-flux densities, watts per square metre",
+            },
+        ),
+        "electrothermal_component": _spec(
+            "electrothermal_component",
+            "electrothermal-component-3d",
+            "ElectrothermalComponent",
+            3,
+            "electrothermal_component",
+            {
+                "electrical_power": "degree-two tetrahedral quadrature integral of sigma(T) * dot(grad(V), grad(V)) at t=1 s, watts",
+                "thermal_energy": "degree-two tetrahedral quadrature integral of 1e6 * T at t=1 s, joules",
+                "temperature_rise": "degree-two tetrahedral quadrature integral of T - 300 at t=1 s, kelvin cubic metres",
+            },
+        ),
         "poisson": _spec(
             "poisson",
             "01-poisson",

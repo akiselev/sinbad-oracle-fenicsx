@@ -11,6 +11,8 @@ REPO = Path(__file__).resolve().parents[1]
 SINBAD_CASES = REPO.parent / "sinbad" / "cases"
 
 EXPECTED = {
+    "two_material_conduction": ("two-material-conduction", "TwoMaterials", 3),
+    "electrothermal_component": ("electrothermal-component-3d", "ElectrothermalComponent", 3),
     "poisson": ("01-poisson", "Poisson", 2),
     "nonlinear_heat": ("03-nonlinear-heat", "NonlinearHeat", 2),
     "linear_elasticity": ("17-linear-elasticity", "LinearElasticity", 3),

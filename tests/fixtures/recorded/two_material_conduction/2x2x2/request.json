@@ -5,19 +5,16 @@
     "version": "0.11.0.post0",
     "normalization_version": 1
   },
-  "capability": "nonlinear_heat",
-  "case_id": "03-nonlinear-heat/recorded-4x4",
+  "capability": "two_material_conduction",
+  "case_id": "two-material-conduction/recorded-2x2x2",
   "model_digest": "blake3:recorded-fixture",
   "refinement": [
-    4,
-    4
+    2,
+    2,
+    2
   ],
   "observables": [
-    "forcing_defect",
-    "h1_seminorm_error",
-    "l2_error",
-    "nodal_l2_error",
-    "steady_l2_error",
-    "total_energy"
+    "heat_flow",
+    "interface_temperature"
   ]
 }

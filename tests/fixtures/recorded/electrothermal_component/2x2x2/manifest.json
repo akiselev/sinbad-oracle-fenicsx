@@ -1,11 +1,11 @@
 {
-  "capability": "linear_elasticity",
+  "capability": "electrothermal_component",
   "extraction": {
     "modules": {
       "adapter.py": "sha256:8f61eb1e108a5a03da62e3b0276a62ca901c568623175d4011c574a570c58bcf",
       "common.py": "sha256:1dc5b7de1541d4b87ff7ca3cc60469f4abd7d4424ae6a48dd4b6a752b9b8944a",
+      "electrothermal_component.py": "sha256:7a495e4517b05a410885b9f19b94b31e54d7519eb9d2c16a313b41c656389fba",
       "evidence.py": "sha256:4444ca192fe4d3e884e259335374656c7b4b04755f98056a0c84658bd743c864",
-      "linear_elasticity.py": "sha256:980bacc43b53bcc6f4bdfbb3fe0b6def0d71b379215258ce0f4da967ee6d9308",
       "protocol.py": "sha256:b444a4d6741502145b10a7c6f46d31f6928b8fb2f40aab07affb335d7af8e975"
     },
     "package_digest": "sha256:0ed41d1c6432dbef516591480a058958a7920f544bd1b7562ff3105e6ce19b88",
@@ -34,7 +34,7 @@
     "cell_type": "tetrahedron",
     "dimension": 3,
     "file": "mesh.npz",
-    "sha256": "sha256:9b1c3c85de49366af9bd99ba70d8aab99c8a26037195c60be8be85cb4d09994c",
+    "sha256": "sha256:2d3e8747b97a550f65ca7ca94d9089274c34d93d0efcc6cf11866866f4ca44db",
     "subdivisions": [
       2,
       2,
@@ -42,47 +42,82 @@
     ],
     "vertex_count": 27
   },
-  "model": "LinearElasticity",
+  "model": "ElectrothermalComponent",
   "normalization": {
-    "displacement_magnitude_sq": "integral over the domain of dot(u, u)",
-    "forcing_defect": "L2 norm over the domain of (case-authored body force - the body force UFL derives symbolically as -div(stress(sym_grad(u_exact))))",
-    "h1_seminorm_error": "L2 norm over the domain of grad(discrete field - exact manufactured field)",
-    "l2_error": "L2 norm over the domain of (discrete field - exact manufactured field)",
-    "nodal_l2_error": "root-mean-square over every mesh vertex and field component of (vertex value - exact manufactured value), Sinbad's `nodal_l2_error` normalization",
-    "strain_energy": "integral over the domain of 0.5 * inner(strain, stress), stress = lambda tr(strain) I + 2 mu strain, lambda = 1.25, mu = 1"
+    "electrical_power": "degree-two tetrahedral quadrature integral of sigma(T) * dot(grad(V), grad(V)) at t=1 s, watts",
+    "temperature_rise": "degree-two tetrahedral quadrature integral of T - 300 at t=1 s, kelvin cubic metres",
+    "thermal_energy": "degree-two tetrahedral quadrature integral of 1e6 * T at t=1 s, joules"
   },
   "normalization_version": 1,
   "notes": {
-    "lame_lambda": 1.25,
-    "lame_mu": 1.0,
-    "linear_solver": {
+    "final_time": 1.0,
+    "integrator": "bdf2",
+    "newton_options": {
       "ksp_type": "preonly",
       "pc_factor_mat_solver_type": "mumps",
-      "pc_type": "lu"
-    }
+      "pc_type": "lu",
+      "snes_atol": 1e-12,
+      "snes_linesearch_type": "none",
+      "snes_max_it": 50,
+      "snes_rtol": 1e-12,
+      "snes_type": "newtonls"
+    },
+    "observable_quadrature_degree": 2,
+    "residual_quadrature_degree": 2,
+    "startup": "bdf1",
+    "step": 0.25,
+    "trajectory": [
+      {
+        "balance_defect": -4.884981308350689e-15,
+        "cooling_reaction": 1.0604361028213023,
+        "electrical_power": 6.217957131410804,
+        "energy_rate": 5.157521028589497,
+        "temperature_max": 302.1665434922981,
+        "time": 0.25
+      },
+      {
+        "balance_defect": 8.43769498715119e-15,
+        "cooling_reaction": 1.2564519937403795,
+        "electrical_power": 6.187216946962474,
+        "energy_rate": 4.930764953222103,
+        "temperature_max": 304.1989358776192,
+        "time": 0.5
+      },
+      {
+        "balance_defect": -3.26405569239796e-14,
+        "cooling_reaction": 1.4353845339989217,
+        "electrical_power": 6.157973423922395,
+        "energy_rate": 4.722588889923441,
+        "temperature_max": 306.07275879956603,
+        "time": 0.75
+      },
+      {
+        "balance_defect": 5.10702591327572e-15,
+        "cooling_reaction": 1.5984871381417685,
+        "electrical_power": 6.1301929319858735,
+        "energy_rate": 4.53170579384411,
+        "temperature_max": 307.79939332916547,
+        "time": 1.0
+      }
+    ]
   },
   "observables": {
-    "displacement_magnitude_sq": 0.0920927057583544,
-    "forcing_defect": 6.9153523990851606e-15,
-    "h1_seminorm_error": 2.664964486717604,
-    "l2_error": 0.38122970551471613,
-    "nodal_l2_error": 0.041655727456543425,
-    "strain_energy": 3.4534764659382917
+    "electrical_power": 6.1301929319858735,
+    "temperature_rise": 4.90197747754361e-06,
+    "thermal_energy": 304.9019774775436
   },
   "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
   "request": {
-    "capability": "linear_elasticity",
-    "case_id": "17-linear-elasticity/recorded-2x2",
+    "capability": "electrothermal_component",
+    "case_id": "electrothermal-component-3d/recorded-2x2x2",
     "model_digest": "blake3:recorded-fixture",
     "observables": [
-      "displacement_magnitude_sq",
-      "forcing_defect",
-      "h1_seminorm_error",
-      "l2_error",
-      "nodal_l2_error",
-      "strain_energy"
+      "electrical_power",
+      "temperature_rise",
+      "thermal_energy"
     ],
     "refinement": [
+      2,
       2,
       2
     ],
@@ -94,19 +129,26 @@
     }
   },
   "schema": "sinbad-oracle-fenicsx-evidence/1",
-  "sinbad_case": "17-linear-elasticity",
+  "sinbad_case": "electrothermal-component-3d",
   "solution": {
     "fields": [
       {
-        "components": 3,
-        "dof_coordinates": "displacement__dof_coordinates",
+        "components": 1,
+        "dof_coordinates": "V__dof_coordinates",
         "dof_count": 27,
-        "name": "displacement",
-        "space": "H1(order=1) vector(3)"
+        "name": "V",
+        "space": "H1(order=1)"
+      },
+      {
+        "components": 1,
+        "dof_coordinates": "T__dof_coordinates",
+        "dof_count": 27,
+        "name": "T",
+        "space": "H1(order=1)"
       }
     ],
     "file": "solution.npz",
-    "sha256": "sha256:dc867eddc6ec4027c4b22c51400d3b52830076c410ffadc52cf696cb04f59455"
+    "sha256": "sha256:235f540f1500483d44afb3433efc6038b6e31b86246c9173816289bb24be8637"
   },
   "tool": {
     "name": "sinbad-oracle-fenicsx",
